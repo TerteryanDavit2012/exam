@@ -2,31 +2,36 @@ package service;
 
 import model.Plane;
 
-
 public class PlaneService {
 
     // Task 1
-    public void printPlane(Plane plane) {
-        System.out.println("Model: " + plane.getModel());
-        System.out.println("Country: " + plane.getCountry());
-        System.out.println("Year: " + plane.getYear());
-        System.out.println("Hours: " + plane.getHours());
-        System.out.println("Military: " + plane.isMilitary());
-        System.out.println("Weight: " + plane.getWeigth() + " KG");
-        System.out.println("Wingspan: " + plane.getWingspan());
-        System.out.println("Top speed: " + plane.getTopSpeed() + " km/h");
-        System.out.println("Seats: " + plane.getSeats());
-        System.out.println("Cost: $" + plane.getCost());
+    public void printPlane(Plane plane) throws Exception {
+        FileService.writeFile("output.txt",
+                "Model: " + plane.getModel() + "\n" +
+                        "Country: " + plane.getCountry() + "\n" +
+                        "Year: " + plane.getYear() + "\n" +
+                        "Hours: " + plane.getHours() + "\n" +
+                        "Military: " + plane.isMilitary() + "\n" +
+                        "Weight: " + plane.getWeigth() + " KG\n" +
+                        "Wingspan: " + plane.getWingspan() + "\n" +
+                        "Top speed: " + plane.getTopSpeed() + " km/h\n" +
+                        "Seats: " + plane.getSeats() + "\n" +
+                        "Cost: $" + plane.getCost() + "\n\n");
     }
 
-    //Task 2
-    public void printMilitaryInfo(Plane plane) {
+    // Task 2
+    public void printMilitaryInfo(Plane plane) throws Exception {
         if (plane.isMilitary()) {
-            System.out.println("Cost: $" + plane.getCost());
-            System.out.println("Top speed: " + plane.getTopSpeed() + " km/h");
+
+            FileService.writeFile("output.txt",
+                    "Cost: $" + plane.getCost() + "\n" +
+                            "Top speed: " + plane.getTopSpeed() + " km/h\n\n");
+
         } else {
-            System.out.println("Model: " + plane.getModel());
-            System.out.println("Country: " + plane.getCountry());
+
+            FileService.writeFile("output.txt",
+                    "Model: " + plane.getModel() + "\n" +
+                            "Country: " + plane.getCountry() + "\n\n");
         }
     }
 
@@ -39,7 +44,7 @@ public class PlaneService {
         }
     }
 
-    // Task4
+    // Task 4
     public String biggerWingspan(Plane plane1, Plane plane2) {
         if (plane1.getWingspan() > plane2.getWingspan()) {
             return plane1.getModel();
@@ -49,7 +54,8 @@ public class PlaneService {
     }
 
     // Task 5
-    public void smallestSeats(Plane plane1, Plane plane2, Plane plane3) {
+    public void smallestSeats(Plane plane1, Plane plane2, Plane plane3)
+            throws Exception {
 
         Plane smallest = plane1;
 
@@ -61,25 +67,43 @@ public class PlaneService {
             smallest = plane3;
         }
 
-        System.out.println("Country: " + smallest.getCountry());
+        FileService.writeFile("output.txt",
+                "Country: " + smallest.getCountry() + "\n\n");
     }
 
-    //Task 6
-    public void printNotMilitary(Plane[] planes) {
+    // Task 6
+    public void printNotMilitary(Plane[] planes) throws Exception {
+
+        FileService.writeFile("output.txt",
+                "Not military planes:\n");
+
         for (Plane plane : planes) {
+
             if (!plane.isMilitary()) {
-                System.out.println(plane);
+                FileService.writeFile("output.txt",
+                        plane + "\n");
             }
         }
+
+        FileService.writeFile("output.txt", "\n");
     }
 
     // Task 7
-    public void printMilitaryMoreThan100Hours(Plane[] planes) {
+    public void printMilitaryMoreThan100Hours(Plane[] planes)
+            throws Exception {
+
+        FileService.writeFile("output.txt",
+                "Military planes with more than 100 hours:\n");
+
         for (Plane plane : planes) {
+
             if (plane.isMilitary() && plane.getHours() > 100) {
-                System.out.println(plane);
+                FileService.writeFile("output.txt",
+                        plane + "\n");
             }
         }
+
+        FileService.writeFile("output.txt", "\n");
     }
 
     // Task 8
@@ -88,6 +112,7 @@ public class PlaneService {
         Plane smallest = planes[0];
 
         for (Plane plane : planes) {
+
             if (plane.getWeigth() <= smallest.getWeigth()) {
                 smallest = plane;
             }
@@ -102,9 +127,12 @@ public class PlaneService {
         Plane cheapest = null;
 
         for (Plane plane : planes) {
+
             if (plane.isMilitary()) {
 
-                if (cheapest == null || plane.getCost() < cheapest.getCost()) {
+                if (cheapest == null ||
+                        plane.getCost() < cheapest.getCost()) {
+
                     cheapest = plane;
                 }
             }
@@ -114,20 +142,36 @@ public class PlaneService {
     }
 
     // Task 10
-    public void sortByYear(Plane[] planes) {
+    public void sortByYear(Plane[] planes) throws Exception {
 
         for (int i = 0; i < planes.length - 1; i++) {
+
             for (int j = 0; j < planes.length - 1 - i; j++) {
+
                 if (planes[j].getYear() > planes[j + 1].getYear()) {
-                    Plane mitq = planes[j];
+
+                    Plane temp = planes[j];
                     planes[j] = planes[j + 1];
-                    planes[j + 1] = mitq;
+                    planes[j + 1] = temp;
                 }
             }
         }
 
-        for (int i = 0; i < planes.length; i++) {
-            System.out.println(planes[i]);
+        FileService.writeFile("output.txt",
+                "Planes sorted by year:\n");
+
+        for (Plane plane : planes) {
+
+            FileService.writeFile("output.txt",
+                    plane.getModel() +
+                            " - " +
+                            plane.getYear() +
+                            "\n");
         }
+
+        FileService.writeFile("output.txt", "\n");
     }
 }
+
+
+

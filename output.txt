@@ -1,0 +1,38 @@
+Model: Boeing 747
+Country: USA
+Year: 1969
+Hours: 5000
+Military: false
+Weight: 0.0 KG
+Wingspan: 0.0
+Top speed: 988.0 km/h
+Seats: 416
+Cost: $418.4
+
+Model: Boeing 747
+Country: USA
+
+Newer plane: F-22 Raptor
+
+Plane with bigger wingspan: F-22 Raptor
+
+Country: USA
+
+Not military planes:
+Plane{model='Boeing 747', country='USA', year=1969, hours=5000, military=false, weigth=0.0, wingspan=0.0, topSpeed=988.0, seats=416, cost=418.4}
+Plane{model='Airbus A380', country='France', year=2005, hours=3000, military=false, weigth=0.0, wingspan=0.0, topSpeed=1020.0, seats=555, cost=445.8}
+
+Military planes with more than 100 hours:
+Plane{model='F-22 Raptor', country='USA', year=2005, hours=1200, military=true, weigth=19700.0, wingspan=13.56, topSpeed=2414.0, seats=1, cost=150.0}
+Plane{model='F-35 Lightning II', country='USA', year=2015, hours=250, military=true, weigth=13200.0, wingspan=10.7, topSpeed=1930.0, seats=1, cost=80.0}
+
+Plane with minimal weight: Airbus A380
+
+Cheapest military plane: F-35 Lightning II
+
+Planes sorted by year:
+Boeing 747 - 1969
+F-22 Raptor - 2005
+Airbus A380 - 2005
+F-35 Lightning II - 2015
+

@@ -1,13 +1,11 @@
 
 import model.Plane;
 import service.PlaneService;
+import service.FileService;
 
-import java.util.Scanner;
 public class AirportTest {
 
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
 
         Plane Plane = new Plane();
         Plane.setModel("Boeing 747");
@@ -61,8 +59,8 @@ public class AirportTest {
 
         PlaneService service = new PlaneService();
 
+        /*
         Scanner sc = new Scanner(System.in);
-        Plane restaurant = Plane;
 
         boolean isActive = true;
 
@@ -87,6 +85,7 @@ public class AirportTest {
             System.out.print("Choose an option: ");
 
             int menuChoice = sc.nextInt();
+
             switch (menuChoice) {
 
                 case 1:
@@ -129,108 +128,67 @@ public class AirportTest {
 
                     break;
 
-
                 case 2:
-
                     service.printPlane(Plane);
-
                     break;
-
 
                 case 3:
-
                     service.printMilitaryInfo(Plane);
-
                     break;
-
 
                 case 4:
 
-                    System.out.println(
-                            "Comparing current plane with Plane 2"
-                    );
-
                     Plane newer =
-                            service.newerPlane(
-                                    Plane,
-                                    Plane1
-                            );
+                            service.newerPlane(Plane, Plane1);
 
-                    System.out.println(
+                    FileService.writeFile(
+                            "output.txt",
                             "Newer plane: "
                                     + newer.getModel()
+                                    + "\n\n"
                     );
 
                     break;
-
 
                 case 5:
 
-                    System.out.println(
-                            "Comparing current plane with Plane 2"
-                    );
-
                     String biggerWingspan =
-                            service.biggerWingspan(
-                                    Plane,
-                                    Plane1
-                            );
+                            service.biggerWingspan(Plane, Plane1);
 
-                    System.out.println(
+                    FileService.writeFile(
+                            "output.txt",
                             "Plane with bigger wingspan: "
                                     + biggerWingspan
+                                    + "\n\n"
                     );
 
                     break;
-
 
                 case 6:
-
-                    service.smallestSeats(
-                            Plane,
-                            Plane1,
-                            Plane2
-                    );
-
+                    service.smallestSeats(Plane, Plane1, Plane2);
                     break;
-
 
                 case 7:
-
-                    System.out.println(
-                            "Not military planes:"
-                    );
-
                     service.printNotMilitary(planes);
-
                     break;
-
 
                 case 8:
-
-                    System.out.println(
-                            "Military planes with more than 100 hours:"
-                    );
-
-                    service.printMilitaryMoreThan100Hours(
-                            planes
-                    );
-
+                    service.printMilitaryMoreThan100Hours(planes);
                     break;
-
 
                 case 9:
 
                     Plane lightest =
                             service.minimalWeight(planes);
 
-                    System.out.println(
+                    FileService.writeFile(
+                            "output.txt",
                             "Plane with minimal weight: "
                                     + lightest.getModel()
+                                    + "\n\n"
                     );
 
                     break;
-
 
                 case 10:
 
@@ -238,29 +196,20 @@ public class AirportTest {
                             service.minimalMilitaryCost(planes);
 
                     if (cheapestMilitary != null) {
-                        System.out.println(
+
+                        FileService.writeFile(
+                                "output.txt",
                                 "Cheapest military plane: "
                                         + cheapestMilitary.getModel()
-                        );
-                    } else {
-                        System.out.println(
-                                "There are no military planes."
+                                        + "\n\n"
                         );
                     }
 
                     break;
 
-
                 case 11:
-
-                    System.out.println(
-                            "Planes sorted by year:"
-                    );
-
                     service.sortByYear(planes);
-
                     break;
-
 
                 case 12:
 
@@ -272,9 +221,7 @@ public class AirportTest {
 
                     break;
 
-
                 default:
-
                     System.out.println(
                             "Invalid Input, Please Try Again."
                     );
@@ -282,10 +229,67 @@ public class AirportTest {
         }
 
         sc.close();
+        */
+
+
+        // Tasks run automatically
+
+        // Task 1
+        service.printPlane(Plane);
+
+        // Task 2
+        service.printMilitaryInfo(Plane);
+
+        // Task 3
+        Plane newer = service.newerPlane(Plane, Plane1);
+
+        FileService.writeFile(
+                "output.txt",
+                "Newer plane: " + newer.getModel() + "\n\n"
+        );
+
+        // Task 4
+        String biggerWingspan =
+                service.biggerWingspan(Plane, Plane1);
+
+        FileService.writeFile(
+                "output.txt",
+                "Plane with bigger wingspan: "
+                        + biggerWingspan + "\n\n"
+        );
+
+        // Task 5
+        service.smallestSeats(Plane, Plane1, Plane2);
+
+        // Task 6
+        service.printNotMilitary(planes);
+
+        // Task 7
+        service.printMilitaryMoreThan100Hours(planes);
+
+        // Task 8
+        Plane lightest = service.minimalWeight(planes);
+
+        FileService.writeFile(
+                "output.txt",
+                "Plane with minimal weight: "
+                        + lightest.getModel() + "\n\n"
+        );
+
+        // Task 9
+        Plane cheapestMilitary =
+                service.minimalMilitaryCost(planes);
+
+        if (cheapestMilitary != null) {
+            FileService.writeFile(
+                    "output.txt",
+                    "Cheapest military plane: "
+                            + cheapestMilitary.getModel() + "\n\n"
+            );
+        }
+
+        // Task 10
+        service.sortByYear(planes);
     }
 }
-
-
-
-
 
