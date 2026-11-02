@@ -2,60 +2,78 @@ package service;
 
 import model.Plane;
 
+import java.io.IOException;
+
 public class PlaneService {
 
     // Task 1
-    public void printPlane(Plane plane) throws Exception {
-        FileService.writeFile("output.txt",
-                "Model: " + plane.getModel() + "\n" +
-                        "Country: " + plane.getCountry() + "\n" +
-                        "Year: " + plane.getYear() + "\n" +
-                        "Hours: " + plane.getHours() + "\n" +
-                        "Military: " + plane.isMilitary() + "\n" +
-                        "Weight: " + plane.getWeigth() + " KG\n" +
-                        "Wingspan: " + plane.getWingspan() + "\n" +
-                        "Top speed: " + plane.getTopSpeed() + " km/h\n" +
-                        "Seats: " + plane.getSeats() + "\n" +
-                        "Cost: $" + plane.getCost() + "\n\n");
+    public void printPlane(Plane plane) throws IOException {
+        String content = "Model: " + plane.getModel() + "\n" +
+                "Country: " + plane.getCountry() + "\n" +
+                "Year: " + plane.getYear() + "\n" +
+                "Hours: " + plane.getHours() + "\n" +
+                "Military: " + plane.isMilitary() + "\n" +
+                "Weight: " + plane.getWeigth() + " KG\n" +
+                "Wingspan: " + plane.getWingspan() + "\n" +
+                "Top speed: " + plane.getTopSpeed() + " km/h\n" +
+                "Seats: " + plane.getSeats() + "\n" +
+                "Cost: $" + plane.getCost();
+
+        System.out.println(content);
+        FileService.writeFile("printPlane.txt", content + "\n\n");
     }
 
     // Task 2
-    public void printMilitaryInfo(Plane plane) throws Exception {
+    public void printMilitaryInfo(Plane plane) throws IOException {
+        String content;
+
         if (plane.isMilitary()) {
-
-            FileService.writeFile("output.txt",
-                    "Cost: $" + plane.getCost() + "\n" +
-                            "Top speed: " + plane.getTopSpeed() + " km/h\n\n");
-
+            content = "Cost: $" + plane.getCost() + "\n" +
+                    "Top speed: " + plane.getTopSpeed() + " km/h";
         } else {
-
-            FileService.writeFile("output.txt",
-                    "Model: " + plane.getModel() + "\n" +
-                            "Country: " + plane.getCountry() + "\n\n");
+            content = "Model: " + plane.getModel() + "\n" +
+                    "Country: " + plane.getCountry();
         }
+
+        System.out.println(content);
+        FileService.writeFile("printMilitaryInfo.txt", content + "\n");
     }
 
     // Task 3
-    public Plane newerPlane(Plane plane1, Plane plane2) {
+    public Plane newerPlane(Plane plane1, Plane plane2) throws IOException {
+        Plane newer;
+
         if (plane1.getYear() >= plane2.getYear()) {
-            return plane1;
+            newer = plane1;
         } else {
-            return plane2;
+            newer = plane2;
         }
+
+        System.out.println("Newer plane: " + newer.getModel());
+        FileService.writeFile("newerPlane.txt", newer.toString() + "\n");
+
+        return newer;
     }
 
     // Task 4
-    public String biggerWingspan(Plane plane1, Plane plane2) {
+    public String biggerWingspan(Plane plane1, Plane plane2) throws IOException {
+        String result;
+
         if (plane1.getWingspan() > plane2.getWingspan()) {
-            return plane1.getModel();
+            result = plane1.getModel();
         } else {
-            return plane2.getModel();
+            result = plane2.getModel();
         }
+
+        System.out.println("Bigger wingspan: " + result);
+        FileService.writeFile("biggerWingspan.txt", result + "\n");
+
+        return result;
     }
 
     // Task 5
     public void smallestSeats(Plane plane1, Plane plane2, Plane plane3)
-            throws Exception {
+            throws IOException {
 
         Plane smallest = plane1;
 
@@ -67,85 +85,89 @@ public class PlaneService {
             smallest = plane3;
         }
 
-        FileService.writeFile("output.txt",
-                "Country: " + smallest.getCountry() + "\n\n");
+        System.out.println("Country: " + smallest.getCountry());
+        FileService.writeFile("smallestSeats.txt",
+                "Country: " + smallest.getCountry() + "\n");
     }
 
     // Task 6
-    public void printNotMilitary(Plane[] planes) throws Exception {
-
-        FileService.writeFile("output.txt",
-                "Not military planes:\n");
+    public void printNotMilitary(Plane[] planes) throws IOException {
 
         for (Plane plane : planes) {
-
             if (!plane.isMilitary()) {
-                FileService.writeFile("output.txt",
-                        plane + "\n");
+                System.out.println(plane);
+                FileService.writeFile("printNotMilitary.txt",
+                        plane.toString() + "\n");
             }
         }
-
-        FileService.writeFile("output.txt", "\n");
     }
 
     // Task 7
     public void printMilitaryMoreThan100Hours(Plane[] planes)
-            throws Exception {
-
-        FileService.writeFile("output.txt",
-                "Military planes with more than 100 hours:\n");
+            throws IOException {
 
         for (Plane plane : planes) {
-
             if (plane.isMilitary() && plane.getHours() > 100) {
-                FileService.writeFile("output.txt",
-                        plane + "\n");
+                System.out.println(plane);
+                FileService.writeFile("printMilitaryMoreThan100Hours.txt",
+                        plane.toString() + "\n");
             }
         }
-
-        FileService.writeFile("output.txt", "\n");
     }
 
     // Task 8
-    public Plane minimalWeight(Plane[] planes) {
+    public Plane minimalWeight(Plane[] planes) throws IOException {
+
+        if (planes.length == 0) {
+            System.out.println("No planes available");
+            return null;
+        }
 
         Plane smallest = planes[0];
 
         for (Plane plane : planes) {
-
-            if (plane.getWeigth() <= smallest.getWeigth()) {
+            if (plane.getWeigth() < smallest.getWeigth()) {
                 smallest = plane;
             }
         }
+
+        System.out.println("Lightest plane: " + smallest.getModel());
+        FileService.writeFile("minimalWeight.txt", smallest.toString() + "\n");
 
         return smallest;
     }
 
     // Task 9
-    public Plane minimalMilitaryCost(Plane[] planes) {
+    public Plane minimalMilitaryCost(Plane[] planes) throws IOException {
 
         Plane cheapest = null;
 
         for (Plane plane : planes) {
-
             if (plane.isMilitary()) {
-
                 if (cheapest == null ||
                         plane.getCost() < cheapest.getCost()) {
-
                     cheapest = plane;
                 }
             }
+        }
+
+        if (cheapest != null) {
+            System.out.println("Cheapest military plane: " + cheapest.getModel());
+            FileService.writeFile("minimalMilitaryCost.txt",
+                    cheapest.toString() + "\n");
+        } else {
+            System.out.println("No military planes found");
+            FileService.writeFile("minimalMilitaryCost.txt",
+                    "No military planes found\n");
         }
 
         return cheapest;
     }
 
     // Task 10
-    public void sortByYear(Plane[] planes) throws Exception {
+    public void sortByYear(Plane[] planes) throws IOException {
 
         for (int i = 0; i < planes.length - 1; i++) {
-
             for (int j = 0; j < planes.length - 1 - i; j++) {
 
                 if (planes[j].getYear() > planes[j + 1].getYear()) {
@@ -157,21 +179,11 @@ public class PlaneService {
             }
         }
 
-        FileService.writeFile("output.txt",
-                "Planes sorted by year:\n");
-
         for (Plane plane : planes) {
+            String content = plane.getModel() + " - " + plane.getYear();
 
-            FileService.writeFile("output.txt",
-                    plane.getModel() +
-                            " - " +
-                            plane.getYear() +
-                            "\n");
+            System.out.println(content);
+            FileService.writeFile("sortByYear.txt", content + "\n");
         }
-
-        FileService.writeFile("output.txt", "\n");
     }
 }
-
-
-
